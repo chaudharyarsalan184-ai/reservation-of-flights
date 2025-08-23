@@ -1,0 +1,164 @@
+
+
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      background: #fff;
+      padding: 25px 40px;
+      border-radius: 10px;
+      box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      color: #122044;
+      margin-bottom: 20px;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px 0 30px;
+      font-weight: bold;
+      font-size: 16px;
+      color: #ccc;
+    }
+
+    .progress-bar .active {
+      color: #122044;
+    }
+
+    .progress-line {
+      height: 6px;
+      background: #e5e5e5;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 8px 0 25px;
+    }
+
+    .progress {
+      height: 6px;
+      background: #122044;
+      width: 50%; /* adjust % based on step */
+    }
+
+    /* Form Styling */
+    .form-section h2 {
+      display: flex;
+      align-items: center;
+      font-size: 22px;
+      color: #122044;
+      margin-bottom: 15px;
+    }
+
+    .form-section h2::before {
+      content: "👤";
+      margin-right: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    .row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .row .form-group {
+      flex: 1;
+    }
+
+    button {
+      display: block;
+      margin: 20px auto 0;
+      padding: 12px 25px;
+      background: #122044;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #1a2b5c;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Booking Process</h1>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <span class="active">Passenger Info</span>
+      <span>Payment Details</span>
+      <span>Confirmation</span>
+    </div>
+    <div class="progress-line">
+      <div class="progress"></div>
+    </div>
+
+    <!-- Passenger Info Form -->
+    <div class="form-section">
+      <h2>Passenger Information</h2>
+      <form>
+        <div class="row">
+          <div class="form-group">
+            <label for="first-name">First Name</label>
+            <input type="text" id="first-name" placeholder="Enter first name">
+          </div>
+          <div class="form-group">
+            <label for="last-name">Last Name</label>
+            <input type="text" id="last-name" placeholder="Enter last name">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">📧 Email</label>
+          <input type="email" id="email" placeholder="Enter email address">
+        </div>
+
+        <div class="form-group">
+          <label for="phone">📞 Phone</label>
+          <input type="tel" id="phone" placeholder="Enter phone number">
+        </div>
+
+        <div class="form-group">
+          <label for="dob">📅 Date of Birth</label>
+          <input type="date" id="dob">
+        </div>
+
+        <button type="submit">Continue</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
