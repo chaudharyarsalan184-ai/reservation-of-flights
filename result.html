@@ -110,6 +110,23 @@
     .select-button:hover {
       background: #c2410c;
     }
+
+
+
+    
+    html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden; /* 🔑 removes that white gap */
+}
+.results-container {
+  max-width: 1200px;
+  width: 100%;   /* ✅ ensures it never exceeds screen */
+  margin: 30px auto;
+  padding: 20px;
+  box-sizing: border-box; /* ✅ padding included in width */
+}
   </style>
 </head>
 <body>
