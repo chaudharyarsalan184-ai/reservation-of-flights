@@ -989,31 +989,28 @@ footer {
 
 /* Responsive Styles */
 
-@media (max-width: 768px) {
-    .header-container {
-        flex-direction: column;
-        text-align: center;
-    }
-    nav ul {
-        margin: 15px 0;
-    }
-    .auth-buttons {
-        margin-top: 15px;
-    }
-    .hero {
-        height: auto;
-        padding: 60px 0;
-    }
-    .hero h1 {
-        font-size: 32px;
-    }
-    .form-row {
-        flex-direction: column;
-    }
-    .form-group {
-        margin-right: 0;
-        margin-bottom: 15px;
-    }
+/* Responsive Footer */
+@media (max-width: 991px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    grid-template-columns: 1fr; /* 1 column on phones */
+    text-align: left;
+  }
+  .footer-column {
+    margin-bottom: 20px;
+  }
+  .footer-column h3 {
+    font-size: 16px;
+  }
+  .footer-bottom {
+    font-size: 13px;
+  }
 }
 
 /* Floating Buttons */
