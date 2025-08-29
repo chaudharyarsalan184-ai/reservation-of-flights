@@ -43,91 +43,121 @@
   <meta charset="UTF-8">
   <title>Flight Results</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f8f9fb;
-    }
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f8f9fb;
+  }
 
+  .results-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 30px auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .results-header {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  .results-header h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.5rem;
+  }
+
+  .flight-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex-wrap: wrap; /* ✅ allows wrapping on small screens */
+  }
+
+  .flight-info {
+    flex: 1 1 60%;
+    min-width: 200px;
+  }
+
+  .flight-info h3 {
+    margin: 0;
+    font-size: 1.2rem;
+  }
+
+  .flight-time {
+    font-size: 1rem;
+    font-weight: bold;
+  }
+
+  .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2563eb;
+  }
+
+  .select-button {
+    background: #f97316;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .select-button:hover {
+    background: #c2410c;
+  }
+
+  /* ✅ Responsive Adjustments */
+  @media (max-width: 992px) {
     .results-container {
-      max-width: 1200px;
-      margin: 30px auto;
-      padding: 20px;
+      padding: 15px;
     }
-
-    .results-header {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .results-header h2 {
-      margin: 0 0 10px 0;
-    }
-
     .flight-card {
-      background: #fff;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      flex-direction: column;
+      align-items: flex-start;
     }
-
-    .flight-info {
-      flex: 1;
-    }
-
-    .flight-info h3 {
-      margin: 0;
-    }
-
-    .flight-time {
-      font-size: 18px;
-      font-weight: bold;
-    }
-
-    .price {
-      font-size: 22px;
-      font-weight: bold;
-      color: #2563eb;
-    }
-
     .select-button {
-      background: #f97316;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: bold;
+      width: 100%; 
+      text-align: center;
     }
+  }
 
-    .select-button:hover {
-      background: #c2410c;
+  @media (max-width: 600px) {
+    .results-header h2 {
+      font-size: 1.2rem;
     }
+    .flight-info h3 {
+      font-size: 1rem;
+    }
+    .flight-time, .price {
+      font-size: 1rem;
+    }
+    .select-button {
+      padding: 12px;
+      font-size: 1rem;
+    }
+  }
 
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow-x: hidden; /* 🔑 removes horizontal scroll */
+  }
+</style>
 
-
-    
-    html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  overflow-x: hidden; /* 🔑 removes that white gap */
-}
-.results-container {
-  max-width: 1200px;
-  width: 100%;   /* ✅ ensures it never exceeds screen */
-  margin: 30px auto;
-  padding: 20px;
-  box-sizing: border-box; /* ✅ padding included in width */
-}
-  </style>
 </head>
 <body>
   <div class="results-container">
