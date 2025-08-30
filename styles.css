@@ -129,25 +129,16 @@ nav ul li a:hover {
 }
 
 /* Search Tabs */
-.autocomplete-suggestions {
-  position: absolute;
-  background: #fff;
-  border: 1px solid #ffffff;
-  max-height: 200px;
-  overflow-y: auto;
-  width: 10%;
-  z-index: 9999;
-  -webkit-text-fill-color:#000000 ;
-}
-
-.autocomplete-suggestion {
-  padding: 8px;
-  cursor: pointer;
-}
-
-.autocomplete-suggestion:hover {
-  background: #f0f0f0;
-}
+.autocomplete-suggestions { position: absolute;
+     background: #fff;
+      border: 1px solid #ffffff;
+       max-height: 200px; 
+       overflow-y: auto;
+        width: 10%; 
+       z-index: 9999;
+        -webkit-text-fill-color:#000000 ; }
+         .autocomplete-suggestion { padding: 8px; cursor: pointer; }
+          .autocomplete-suggestion:hover { background: #f0f0f0; }
 
 
 
@@ -179,6 +170,30 @@ nav ul li a:hover {
 .hidden {
   display: none !important;
 }
+
+
+
+/* Mobile look (like your screenshot) */
+@media (max-width: 768px) {
+  .autocomplete-suggestions {
+    position: absolute;       /* stays just below input */
+    width: 100%;              /* exactly input width */
+    left: 0;
+    right: 0;
+    border: 1px solid #ddd;
+    border-top: none;         /* remove white line */
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+
+  .autocomplete-suggestion {
+    font-size: 14px;
+    padding: 12px;
+  }
+}
+
+
+
 
 /* Search Form */
 
@@ -906,6 +921,112 @@ body {
     }
 }
 
+/* Footer */
+
+footer {
+    background-color: #1a3e72;
+    color: white;
+    padding: 60px 0 20px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.footer-column h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-column h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 40px;
+    height: 2px;
+    background-color: #ffc107;
+}
+
+.footer-column ul {
+    list-style: none;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a {
+    color: #ddd;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.footer-column ul li a:hover {
+    color: #ffc107;
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.social-links a {
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s;
+}
+
+.social-links a:hover {
+    background-color: #ffc107;
+    color: #1a3e72;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: #aaa;
+    font-size: 14px;
+}
+
+/* Responsive Styles */
+
+/* Responsive Footer */
+@media (max-width: 991px) {
+  .footer-content {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
+    text-align: left;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-content {
+    grid-template-columns: 1fr; /* 1 column on phones */
+    text-align: left;
+  }
+  .footer-column {
+    margin-bottom: 20px;
+  }
+  .footer-column h3 {
+    font-size: 16px;
+  }
+  .footer-bottom {
+    font-size: 13px;
+  }
+}
 
 
 /* Floating Buttons */
@@ -967,4 +1088,94 @@ body {
         height: 50px;
         font-size: 20px;
     }
+}
+
+
+
+/* --------- Navbar Responsive --------- */
+@media (max-width: 768px) {
+  .header-container {
+    flex-wrap: wrap;
+  }
+
+
+
+/* --------- Hero Responsive --------- */
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: 26px;
+    line-height: 1.3;
+  }
+
+  .hero p {
+    font-size: 14px;
+    max-width: 90%;
+  }
+}
+
+/* --------- Form Responsive --------- */
+@media (max-width: 768px) {
+  .search-form {
+    padding: 15px;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .search-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+  }
+}
+
+
+
+
+
+
+
+
+/* Navbar Responsive without hamburger */
+@media (max-width: 768px) {
+  .header-container {
+    flex-wrap: wrap;         /* allow wrapping */
+    text-align: center;
+  }
+
+  .logo {
+    flex: 1 1 100%;          /* logo takes full width */
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  nav {
+    flex: 1 1 100%;          /* nav also takes full width */
+    margin: 5px 0;
+  }
+
+  nav ul {
+    justify-content: center; /* center links */
+    flex-wrap: wrap;         /* allow breaking into 2 lines */
+    gap: 10px;
+  }
+
+  nav ul li a {
+    font-size: 14px;         /* slightly smaller text */
+  }
+
+  .auth-buttons {
+    flex: 1 1 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
 }
