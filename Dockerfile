@@ -6,8 +6,8 @@ FROM node:22-alpine AS builder
 
 WORKDIR /app
 
-# Build args - baked into client bundle at build time
-ARG REACT_APP_API_URL=https://api.skyfareshub.com
+# Build args - use /api for CORS-free proxy (nginx forwards to api.skyfareshub.com)
+ARG REACT_APP_API_URL=/api
 ARG REACT_APP_WEBSITE_ID=f0c88814-ba97-4498-8a4c-d1318d338898
 
 ENV REACT_APP_API_URL=$REACT_APP_API_URL

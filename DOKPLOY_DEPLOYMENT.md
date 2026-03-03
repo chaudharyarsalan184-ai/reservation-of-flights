@@ -96,6 +96,24 @@ docker build --build-arg REACT_APP_API_URL=/api -t reservation-of-flights .
 
 ---
 
+## Troubleshooting: "Unable to connect" on live site
+
+This usually means **CORS** or **missing env vars**:
+
+1. **If using Docker** (recommended): The Dockerfile defaults to `REACT_APP_API_URL=/api`. Nginx proxies `/api/*` to the real API, so requests are same-origin and CORS doesn't apply. Rebuild and redeploy the Docker image.
+
+2. **If building without Docker** (Vercel, Netlify, etc.):
+   - Set `REACT_APP_API_URL=https://api.skyfareshub.com` and `REACT_APP_WEBSITE_ID=f0c88814-ba97-4498-8a4c-d1318d338898` as **build** env vars
+   - Add `https://reservationofflights.com` (and `https://www.reservationofflights.com`) to the API's CORS allowlist for your Website ID in the CRM
+   - Or set up a proxy (e.g. Vercel rewrites: `/api/*` → `https://api.skyfareshub.com/*`) and use `REACT_APP_API_URL=/api`
+
+3. **Verify**: DevTools → Network → run a flight search. Check the failed request:
+   - Wrong URL (e.g. localhost)? → Env vars not set at build
+   - CORS error in console? → Add your domain to API CORS
+   - 401? → Check Website ID
+
+---
+
 ## Quick Test Steps
 
 ### Local

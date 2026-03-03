@@ -76,9 +76,9 @@ api.interceptors.response.use(
     }
 
     if (error.code === 'ERR_NETWORK' || !error.response) {
-      console.error('Network error - unable to connect to server');
+      console.error('[ROF API] Network error:', error.message, '| Base URL:', API_BASE_URL, '| Likely CORS or missing env vars');
       const networkError = new Error(
-        'Unable to connect to the server. Please check your internet connection.'
+        'Unable to connect to flight search. Please try again later.'
       );
       networkError.isNetworkError = true;
       return Promise.reject(networkError);
