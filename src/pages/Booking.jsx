@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import BackToTop from '../components/BackToTop';
 import { AIRPORTS } from '../data/airports';
+import { apiService } from '../services/api';
 
 const getCityFromCode = (code) => AIRPORTS.find((a) => a.code === code)?.city || code;
 
@@ -52,6 +53,8 @@ function Booking() {
     specialRequests: '',
   });
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
 
   const flight = state?.flight;
   const searchParams = state?.searchParams || {};
@@ -86,9 +89,45 @@ function Booking() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setIsSubmitting(true);
+    setSubmitError(null);
+    try {
+      const bookingPayload = {
+        status: 'pending',
+        passenger: {
+          firstName: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim(),
+          specialRequests: formData.specialRequests?.trim() || undefined,
+        },
+        flight: {
+          id: flight.id,
+          airline: flight.airline,
+          airlineCode: flight.airlineCode,
+          price: flight.price,
+          isRoundTrip: flight.isRoundTrip,
+          outbound: flight.outbound,
+          returnFlight: flight.returnFlight,
+        },
+        route: {
+          from,
+          to,
+          departureDate,
+          returnDate,
+          passengers,
+          tripType,
+        },
+      };
+      await apiService.createBooking(bookingPayload);
+      setSubmitted(true);
+    } catch (err) {
+      setSubmitError(err.message || 'Failed to submit booking. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const returnLogo = flight.returnFlight?.airlineCode
@@ -212,11 +251,15 @@ function Booking() {
                       placeholder="Any special requests or notes..."
                     />
                   </div>
+                  {submitError && (
+                    <p className="text-red-600 text-sm">{submitError}</p>
+                  )}
                   <button
                     type="submit"
-                    className="w-full py-3 bg-[#FF6B35] hover:bg-[#e55a28] text-white font-bold rounded-lg transition-colors"
+                    disabled={isSubmitting}
+                    className="w-full py-3 bg-[#FF6B35] hover:bg-[#e55a28] disabled:opacity-70 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors"
                   >
-                    Proceed to Payment
+                    {isSubmitting ? 'Submitting...' : 'Proceed to Payment'}
                   </button>
                 </form>
               </div>
@@ -265,8 +308,8 @@ function Booking() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Details Submitted</h3>
-                <p className="text-gray-600 mb-6">Your passenger information has been saved. Payment integration will be added in a future release.</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Booking Pending</h3>
+                <p className="text-gray-600 mb-6">Your booking has been saved and is now visible as &quot;Pending&quot; in the CRM. You can complete payment from there or we will contact you shortly.</p>
                 <div className="flex gap-3 justify-center">
                   <button
                     type="button"
