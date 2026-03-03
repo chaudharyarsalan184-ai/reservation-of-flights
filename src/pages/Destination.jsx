@@ -6,6 +6,7 @@ import Footer from '../components/Footer';
 import FlightResultCard from '../components/FlightResultCard';
 import BackToTop from '../components/BackToTop';
 import { getDestinationBySlug } from '../data/destinations';
+import { FALLBACK_IMAGE } from '../utils/images';
 import { apiService } from '../services/api';
 import { getAirlineName, formatDuration } from '../utils/airlines';
 import { AIRPORTS } from '../data/airports';
@@ -151,6 +152,7 @@ function Destination() {
             src={image}
             alt={`${city}, ${country}`}
             className="absolute inset-0 w-full h-full object-cover"
+            onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
           />
           <div className="absolute inset-0 bg-black/40" />
           <div className="relative z-10 h-full flex flex-col justify-end p-6 sm:p-10">
@@ -169,7 +171,7 @@ function Destination() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
               {images.map((img, i) => (
                 <div key={i} className="rounded-xl overflow-hidden shadow-md aspect-[4/3]">
-                  <img src={img} alt={`${city} view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={img} alt={`${city} view ${i + 1}`} className="w-full h-full object-cover" loading="lazy" onError={(e) => { e.target.src = FALLBACK_IMAGE; }} />
                 </div>
               ))}
             </div>

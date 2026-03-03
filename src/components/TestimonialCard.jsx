@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { FALLBACK_IMAGE } from '../utils/images';
 
 /**
  * Customer testimonial card for About page slider.
@@ -25,6 +26,7 @@ function TestimonialCard({ name, role, image, quote, rating = 5 }) {
           alt={name}
           className="w-12 h-12 rounded-full object-cover"
           loading="lazy"
+          onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
         />
         <div>
           <p className="font-semibold text-gray-900">{name}</p>

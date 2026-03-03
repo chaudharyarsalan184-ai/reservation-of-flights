@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { FALLBACK_IMAGE } from '../utils/images';
 
 // Domestic deals - with IATA codes for flight search
 const DOMESTIC_DEALS = [
@@ -12,10 +13,10 @@ const DOMESTIC_DEALS = [
 
 // International deals - with IATA codes
 const INTERNATIONAL_DEALS = [
-  { from: 'New York', fromCode: 'JFK', to: 'London', toCode: 'LHR', price: '489.00', date: '15 Apr 26', image: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=200&q=80', alt: 'London' },
-  { from: 'Los Angeles', fromCode: 'LAX', to: 'Tokyo', toCode: 'NRT', price: '785.50', date: '18 Apr 26', image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=200&q=80', alt: 'Tokyo' },
-  { from: 'Miami', fromCode: 'MIA', to: 'Mexico City', toCode: 'MEX', price: '312.00', date: '22 Apr 26', image: 'https://images.unsplash.com/photo-1518639192441-8fcecf6d99c6?w=200&q=80', alt: 'Mexico City' },
-  { from: 'Chicago', fromCode: 'ORD', to: 'Paris', toCode: 'CDG', price: '598.00', date: '10 Apr 26', image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=200&q=80', alt: 'Paris', featured: true },
+  { from: 'New York', fromCode: 'JFK', to: 'London', toCode: 'LHR', price: '489.00', date: '15 Apr 26', image: 'https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'London' },
+  { from: 'Los Angeles', fromCode: 'LAX', to: 'Tokyo', toCode: 'NRT', price: '785.50', date: '18 Apr 26', image: 'https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Tokyo' },
+  { from: 'Miami', fromCode: 'MIA', to: 'Mexico City', toCode: 'MEX', price: '312.00', date: '22 Apr 26', image: 'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Mexico City' },
+  { from: 'Chicago', fromCode: 'ORD', to: 'Paris', toCode: 'CDG', price: '598.00', date: '10 Apr 26', image: 'https://images.pexels.com/photos/941415/pexels-photo-941415.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Paris', featured: true },
   { from: 'San Francisco', fromCode: 'SFO', to: 'Sydney', toCode: 'SYD', price: '892.00', date: '25 Apr 26', image: 'https://images.unsplash.com/photo-1523482580671-f216146beb83?w=200&q=80', alt: 'Sydney' },
 ];
 
@@ -31,6 +32,7 @@ function DealRow({ from, fromCode, to, toCode, price, date, image, alt, featured
         alt={alt}
         className="w-14 h-14 rounded-full object-cover flex-shrink-0"
         loading="lazy"
+        onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
       />
       <div className="flex-1 min-w-[140px]">
         <p className="font-medium text-gray-800">

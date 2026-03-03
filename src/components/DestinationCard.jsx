@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-// Fallback image when primary fails to load
-const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80';
+import { FALLBACK_IMAGE } from '../utils/images';
 
 /**
  * Destination card - links to destination detail page with city content and flight deals.

@@ -13,11 +13,11 @@ import HelpButton from '../components/HelpButton';
 // [London] [Cancun-tall] [Tokyo]
 // [Paris]  [Cancun-tall] [San Juan]
 const DESTINATIONS_LAYOUT = {
-  topLeft: { image: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=800&q=80', city: 'London', country: 'United Kingdom', price: '355', slug: 'london' },
-  center: { image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80', city: 'Cancun', country: 'Mexico', price: '452', featured: true, slug: 'cancun' },
-  topRight: { image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80', city: 'Tokyo', country: 'Japan', price: '1355', slug: 'tokyo' },
-  bottomLeft: { image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80', city: 'Paris', country: 'France', price: '299', slug: 'paris' },
-  bottomRight: { image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&q=80', city: 'San Juan', country: 'Puerto Rico', price: '425', slug: 'san-juan' },
+  topLeft: { image: 'https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=800', city: 'London', country: 'United Kingdom', price: '355', slug: 'london' },
+  center: { image: 'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=800', city: 'Cancun', country: 'Mexico', price: '452', featured: true, slug: 'cancun' },
+  topRight: { image: 'https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=800', city: 'Tokyo', country: 'Japan', price: '1355', slug: 'tokyo' },
+  bottomLeft: { image: 'https://images.pexels.com/photos/941415/pexels-photo-941415.jpeg?auto=compress&cs=tinysrgb&w=800', city: 'Paris', country: 'France', price: '299', slug: 'paris' },
+  bottomRight: { image: 'https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=800', city: 'San Juan', country: 'Puerto Rico', price: '425', slug: 'san-juan' },
 };
 
 const FAQ_ITEMS = [
@@ -48,7 +48,7 @@ const FAQ_ITEMS = [
 ];
 
 // Cityscape skyline. For Freepik image: download and save as public/hero.jpg, then use '/hero.jpg'
-const HERO_IMAGE = 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=1920&q=80';
+const HERO_IMAGE = 'https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&w=1920';
 
 function Home() {
   return (
@@ -103,10 +103,11 @@ function Home() {
         <section className="w-full max-w-[100%] section-spacing-last faq-no-gap-above flex flex-col lg:flex-row min-h-[400px]">
           <div className="w-full lg:w-1/2 flex-shrink-0 relative min-h-[250px] lg:min-h-[500px]">
             <img
-              src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?w=1200&q=80"
+              src="https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1200"
               alt="Times Square New York"
               className="absolute inset-0 w-full h-full object-cover"
               loading="lazy"
+              onError={(e) => { e.target.src = 'https://picsum.photos/1200/600?random=nyc'; }}
             />
           </div>
           <div

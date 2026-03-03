@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react';
 
+const FALLBACK = 'https://picsum.photos/1920/800?random=travel';
 const SLIDES = [
   {
-    image: 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=1920&q=80',
+    image: 'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=1920',
     caption: 'Where the ocean meets the sky — paradise awaits',
-    alt: 'Bali Indonesia',
+    alt: 'Cancun Mexico Beach',
   },
   {
-    image: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=1920&q=80',
+    image: 'https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=1920',
     caption: 'Every corner of the world has a story to tell',
     alt: 'London Big Ben',
   },
   {
-    image: 'https://images.unsplash.com/photo-1578637387939-43c525550085?w=1920&q=80',
+    image: 'https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=1920',
     caption: 'Adventure is out there — discover new horizons',
     alt: 'Tokyo Tower',
   },
   {
-    image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=1920&q=80',
+    image: 'https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1920',
     caption: 'Where the ocean meets the sky — paradise awaits',
-    alt: 'Miami Beach',
+    alt: 'City Skyline',
   },
 ];
 
@@ -50,6 +51,7 @@ function SlideshowSection() {
               alt={slide.alt}
               className="absolute inset-0 w-full h-full object-cover"
               loading={index === 0 ? 'eager' : 'lazy'}
+              onError={(e) => { e.target.src = FALLBACK; }}
             />
             <div
               className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/30"

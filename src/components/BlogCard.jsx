@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FALLBACK_IMAGE } from '../utils/images';
 
 /**
  * Blog post card with image, title, excerpt, read time, and date.
@@ -14,6 +15,7 @@ function BlogCard({ image, title, excerpt, readTime, date, slug = '#' }) {
             alt={title}
             className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
             loading="lazy"
+            onError={(e) => { e.target.src = FALLBACK_IMAGE; }}
           />
         </div>
       </Link>
