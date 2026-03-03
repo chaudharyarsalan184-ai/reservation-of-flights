@@ -49,18 +49,30 @@ function AirportSelect({ id, label, value, onChange, placeholder, useApi = false
     []
   );
 
+  const q = query.trim().toLowerCase();
+  const staticFiltered = q
+    ? AIRPORTS.filter(
+        (a) =>
+          a.code.toLowerCase().includes(q) ||
+          a.city.toLowerCase().includes(q) ||
+          a.country.toLowerCase().includes(q) ||
+          a.name.toLowerCase().includes(q)
+      ).slice(0, 12)
+    : AIRPORTS.slice(0, 12);
+
+  // Common typos (e.g. ifk -> jfk)
+  const TYPO_MAP = { ifk: 'jfk', jf: 'jfk' };
+  const typoExpand = TYPO_MAP[q];
+  const typoFiltered =
+    typoExpand && !staticFiltered.length
+      ? AIRPORTS.filter((a) => a.code.toLowerCase().includes(typoExpand)).slice(0, 12)
+      : staticFiltered;
+
+  // When useApi: prefer API results; fall back to static (or typo-corrected) when API returns empty
   const filtered =
     useApi && query.trim().length >= 2
-      ? apiOptions.slice(0, 12)
-      : query.trim()
-        ? AIRPORTS.filter(
-            (a) =>
-              a.code.toLowerCase().includes(query.toLowerCase()) ||
-              a.city.toLowerCase().includes(query.toLowerCase()) ||
-              a.country.toLowerCase().includes(query.toLowerCase()) ||
-              a.name.toLowerCase().includes(query.toLowerCase())
-          ).slice(0, 12)
-        : AIRPORTS.slice(0, 12);
+      ? (apiOptions.length > 0 ? apiOptions : typoFiltered)
+      : typoFiltered;
 
   useEffect(() => {
     setHighlightIndex(0);
