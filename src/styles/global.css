@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+/* Custom theme for primary orange color */
+@theme {
+  --color-primary: #FF6B35;
+  --color-primary-hover: #e55a28;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Consistent section spacing */
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+.section-spacing {
+  margin: 1rem 0;
+  padding: 1rem 0;
+}
+
+@media (min-width: 640px) {
+  .section-spacing {
+    margin: 1.25rem 0;
+    padding: 1.25rem 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing {
+    margin: 1.5rem 0;
+    padding: 1.5rem 0;
+  }
+}
+
+/* No gap before footer - last section */
+.section-spacing-last {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+@media (min-width: 640px) {
+  .section-spacing-last {
+    margin-top: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-spacing-last {
+    margin-top: 1.5rem;
+  }
+}
+
+/* Full width utility - no side padding/margins */
+.full-width {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Force no gap between slideshow and FAQ - overrides section spacing */
+.slideshow-no-gap-below {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.faq-no-gap-above {
+  margin-top: -2px !important; /* slight overlap to eliminate white gap */
+  padding-top: 0 !important;
+}
