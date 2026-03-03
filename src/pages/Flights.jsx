@@ -147,6 +147,7 @@ function Flights() {
             isRoundTrip,
             outbound,
             returnFlight,
+            rawOffer: offer,
           });
         });
 
@@ -386,6 +387,7 @@ function Flights() {
                               ...flight,
                               outbound: flight.outbound,
                               returnFlight: flight.returnFlight,
+                              rawOffer: flight.rawOffer,
                             },
                             searchParams: {
                               from,

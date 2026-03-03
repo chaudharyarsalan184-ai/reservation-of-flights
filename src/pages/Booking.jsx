@@ -132,11 +132,43 @@ function Booking() {
       flight: { id: flight.id, outbound: flight.outbound, returnFlight: flight.returnFlight },
     };
 
+    let succeeded = false;
     try {
-      await apiService.createBooking(bookingPayload);
-      setSubmitted(true);
-    } catch (err) {
-      saveBookingLocally(bookingPayload);
+      if (flight.rawOffer) {
+        try {
+          const orderPayload = {
+            ...flight.rawOffer,
+            travelers: [{
+              id: '1',
+              name: { firstName: formData.firstName.trim(), lastName: formData.lastName.trim() },
+              email: formData.email.trim(),
+              phone: formData.phone.trim(),
+            }],
+          };
+          await apiService.createFlightOrder(orderPayload);
+          succeeded = true;
+        } catch (orderErr) {
+          console.warn('flightCreateOrder failed, trying createBooking', orderErr);
+        }
+      }
+
+      if (!succeeded) {
+        try {
+          const crmPayload = {
+            ...bookingPayload,
+            first_name: bookingPayload.firstName,
+            last_name: bookingPayload.lastName,
+          };
+          await apiService.createBooking(crmPayload);
+          succeeded = true;
+        } catch (bookingErr) {
+          console.warn('createBooking failed, saving locally', bookingErr);
+        }
+      }
+
+      if (!succeeded) {
+        saveBookingLocally(bookingPayload);
+      }
       setSubmitted(true);
     } finally {
       setIsSubmitting(false);
