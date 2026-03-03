@@ -48,7 +48,7 @@ const FAQ_ITEMS = [
 ];
 
 // Cityscape skyline. For Freepik image: download and save as public/hero.jpg, then use '/hero.jpg'
-const HERO_IMAGE = 'https://images.pexels.com/photos/2113994/pexels-photo-2113994.jpeg?auto=compress&cs=tinysrgb&w=1920';
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25?w=1920&q=80';
 
 function Home() {
   return (
