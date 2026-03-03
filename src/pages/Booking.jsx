@@ -96,35 +96,37 @@ function Booking() {
     try {
       const bookingPayload = {
         status: 'pending',
-        passenger: {
-          firstName: formData.firstName.trim(),
-          lastName: formData.lastName.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          specialRequests: formData.specialRequests?.trim() || undefined,
-        },
-        flight: {
-          id: flight.id,
-          airline: flight.airline,
-          airlineCode: flight.airlineCode,
-          price: flight.price,
-          isRoundTrip: flight.isRoundTrip,
-          outbound: flight.outbound,
-          returnFlight: flight.returnFlight,
-        },
-        route: {
-          from,
-          to,
-          departureDate,
-          returnDate,
-          passengers,
-          tripType,
-        },
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        email: formData.email.trim(),
+        phone: formData.phone.trim(),
+        note: [
+          formData.specialRequests?.trim(),
+          `Route: ${from} → ${to}`,
+          `Departure: ${departureDate}`,
+          returnDate ? `Return: ${returnDate}` : null,
+          `Passengers: ${passengers}`,
+          `Airline: ${flight.airline}`,
+          `Price: USD ${flight.price}`,
+          `Outbound: ${flight.outbound?.departureTime} ${flight.outbound?.departureCode} - ${flight.outbound?.arrivalTime} ${flight.outbound?.arrivalCode}`,
+          flight.returnFlight ? `Return: ${flight.returnFlight?.departureTime} ${flight.returnFlight?.departureCode} - ${flight.returnFlight?.arrivalTime} ${flight.returnFlight?.arrivalCode}` : null,
+        ].filter(Boolean).join(' | '),
+        origin: from,
+        destination: to,
+        departureDate,
+        returnDate: returnDate || undefined,
+        passengers,
+        tripType,
+        totalPrice: flight.price,
+        airline: flight.airline,
       };
       await apiService.createBooking(bookingPayload);
       setSubmitted(true);
     } catch (err) {
-      setSubmitError(err.message || 'Failed to submit booking. Please try again.');
+      const serverMessage = err.response?.data?.message || err.response?.data?.error || err.response?.data?.msg;
+      const serverDetail = typeof err.response?.data === 'object' ? JSON.stringify(err.response.data) : err.response?.data;
+      const msg = serverMessage || (err.response?.status === 500 && serverDetail ? `Server error: ${serverDetail}` : null) || err.message || 'Failed to submit booking. Please try again.';
+      setSubmitError(msg);
     } finally {
       setIsSubmitting(false);
     }
