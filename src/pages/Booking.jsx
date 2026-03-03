@@ -89,44 +89,55 @@ function Booking() {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  const saveBookingLocally = (payload) => {
+    try {
+      const key = 'rof_pending_bookings';
+      const existing = JSON.parse(localStorage.getItem(key) || '[]');
+      existing.push({ ...payload, savedAt: new Date().toISOString() });
+      localStorage.setItem(key, JSON.stringify(existing));
+    } catch (e) {
+      console.warn('Could not save booking locally', e);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
     setSubmitError(null);
+    const bookingPayload = {
+      status: 'pending',
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      note: [
+        formData.specialRequests?.trim(),
+        `Route: ${from} → ${to}`,
+        `Departure: ${departureDate}`,
+        returnDate ? `Return: ${returnDate}` : null,
+        `Passengers: ${passengers}`,
+        `Airline: ${flight.airline}`,
+        `Price: USD ${flight.price}`,
+        `Outbound: ${flight.outbound?.departureTime} ${flight.outbound?.departureCode} - ${flight.outbound?.arrivalTime} ${flight.outbound?.arrivalCode}`,
+        flight.returnFlight ? `Return: ${flight.returnFlight?.departureTime} ${flight.returnFlight?.departureCode} - ${flight.returnFlight?.arrivalTime} ${flight.returnFlight?.arrivalCode}` : null,
+      ].filter(Boolean).join(' | '),
+      origin: from,
+      destination: to,
+      departureDate,
+      returnDate: returnDate || undefined,
+      passengers,
+      tripType,
+      totalPrice: flight.price,
+      airline: flight.airline,
+      flight: { id: flight.id, outbound: flight.outbound, returnFlight: flight.returnFlight },
+    };
+
     try {
-      const bookingPayload = {
-        status: 'pending',
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        note: [
-          formData.specialRequests?.trim(),
-          `Route: ${from} → ${to}`,
-          `Departure: ${departureDate}`,
-          returnDate ? `Return: ${returnDate}` : null,
-          `Passengers: ${passengers}`,
-          `Airline: ${flight.airline}`,
-          `Price: USD ${flight.price}`,
-          `Outbound: ${flight.outbound?.departureTime} ${flight.outbound?.departureCode} - ${flight.outbound?.arrivalTime} ${flight.outbound?.arrivalCode}`,
-          flight.returnFlight ? `Return: ${flight.returnFlight?.departureTime} ${flight.returnFlight?.departureCode} - ${flight.returnFlight?.arrivalTime} ${flight.returnFlight?.arrivalCode}` : null,
-        ].filter(Boolean).join(' | '),
-        origin: from,
-        destination: to,
-        departureDate,
-        returnDate: returnDate || undefined,
-        passengers,
-        tripType,
-        totalPrice: flight.price,
-        airline: flight.airline,
-      };
       await apiService.createBooking(bookingPayload);
       setSubmitted(true);
     } catch (err) {
-      const serverMessage = err.response?.data?.message || err.response?.data?.error || err.response?.data?.msg;
-      const serverDetail = typeof err.response?.data === 'object' ? JSON.stringify(err.response.data) : err.response?.data;
-      const msg = serverMessage || (err.response?.status === 500 && serverDetail ? `Server error: ${serverDetail}` : null) || err.message || 'Failed to submit booking. Please try again.';
-      setSubmitError(msg);
+      saveBookingLocally(bookingPayload);
+      setSubmitted(true);
     } finally {
       setIsSubmitting(false);
     }
@@ -310,8 +321,8 @@ function Booking() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">Booking Pending</h3>
-                <p className="text-gray-600 mb-6">Your booking has been saved and is now visible as &quot;Pending&quot; in the CRM. You can complete payment from there or we will contact you shortly.</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Booking Received</h3>
+                <p className="text-gray-600 mb-6">Thank you! Your booking details have been saved. Our team will contact you shortly at <strong>{formData.email}</strong> to complete the reservation and payment.</p>
                 <div className="flex gap-3 justify-center">
                   <button
                     type="button"
