@@ -60,7 +60,7 @@ function HeroSection({ contentOnly = false }) {
           onSubmit={handleSubmit}
           className="bg-white/95 rounded-lg shadow-lg p-3 sm:p-4"
         >
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-2 sm:gap-3 items-end">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-2 sm:gap-3 items-end">
             <div className="min-w-0">
               <AirportSelect
                 id="from"
@@ -103,7 +103,7 @@ function HeroSection({ contentOnly = false }) {
                 <option value="First">First</option>
               </select>
             </div>
-            <button type="submit" className="col-span-1 sm:col-span-2 md:col-span-1 px-4 py-2.5 sm:px-6 bg-[#FF6B35] hover:bg-[#e55a28] text-white font-semibold rounded transition-colors text-sm sm:text-base">
+            <button type="submit" className="px-4 py-2.5 sm:px-6 bg-[#FF6B35] hover:bg-[#e55a28] text-white font-semibold rounded transition-colors text-sm sm:text-base">
               Search
             </button>
           </div>

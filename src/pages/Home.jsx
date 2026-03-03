@@ -13,11 +13,11 @@ import HelpButton from '../components/HelpButton';
 // [London] [Cancun-tall] [Tokyo]
 // [Paris]  [Cancun-tall] [San Juan]
 const DESTINATIONS_LAYOUT = {
-  topLeft: { image: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=800&q=80', city: 'London', country: 'United Kingdom', price: '355' },
-  center: { image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80', city: 'Cancun', country: 'Mexico', price: '452', featured: true },
-  topRight: { image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80', city: 'Tokyo', country: 'Japan', price: '1355' },
-  bottomLeft: { image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80', city: 'Paris', country: 'France', price: '299' },
-  bottomRight: { image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&q=80', city: 'San Juan', country: 'Puerto Rico', price: '425' },
+  topLeft: { image: 'https://images.unsplash.com/photo-1533929736458-ca588d08c8be?w=800&q=80', city: 'London', country: 'United Kingdom', price: '355', slug: 'london' },
+  center: { image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800&q=80', city: 'Cancun', country: 'Mexico', price: '452', featured: true, slug: 'cancun' },
+  topRight: { image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800&q=80', city: 'Tokyo', country: 'Japan', price: '1355', slug: 'tokyo' },
+  bottomLeft: { image: 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80', city: 'Paris', country: 'France', price: '299', slug: 'paris' },
+  bottomRight: { image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800&q=80', city: 'San Juan', country: 'Puerto Rico', price: '425', slug: 'san-juan' },
 };
 
 const FAQ_ITEMS = [

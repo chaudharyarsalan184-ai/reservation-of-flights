@@ -11,7 +11,6 @@ function Navbar({ className = '', transparent = false }) {
 
   const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/flights', label: 'Flights' },
     { to: '/about', label: 'About Us' },
     { to: '/contact', label: 'Contact' },
     { to: '/blog', label: 'Blog' },

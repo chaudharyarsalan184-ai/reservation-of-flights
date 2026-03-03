@@ -6,10 +6,10 @@ import PropTypes from 'prop-types';
 const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=800&q=80';
 
 /**
- * Destination card - flightschannel.com style.
- * Image background, destination name at bottom-left, price/stars, blue arrow button at bottom-right.
+ * Destination card - links to destination detail page with city content and flight deals.
  */
-function DestinationCard({ image, city, country, price, rating = 5, to = '/flights', featured = false }) {
+function DestinationCard({ image, city, country, price, rating = 5, to, slug, featured = false }) {
+  const href = slug ? `/destination/${slug}` : (to || '/flights');
   const [imgSrc, setImgSrc] = useState(image);
 
   const handleImageError = () => {
@@ -18,7 +18,7 @@ function DestinationCard({ image, city, country, price, rating = 5, to = '/fligh
 
   return (
     <Link
-      to={to}
+      to={href}
       className={`group relative block overflow-hidden rounded-xl shadow-md transition-all duration-300 hover:shadow-lg h-full min-h-0 ${
         featured ? 'sm:row-span-2' : ''
       }`}
@@ -79,6 +79,7 @@ DestinationCard.propTypes = {
   price: PropTypes.string.isRequired,
   rating: PropTypes.number,
   to: PropTypes.string,
+  slug: PropTypes.string,
   featured: PropTypes.bool,
 };
 
