@@ -103,7 +103,7 @@ function Home() {
         <section className="w-full max-w-[100%] section-spacing-last faq-no-gap-above flex flex-col lg:flex-row min-h-[400px]">
           <div className="w-full lg:w-1/2 flex-shrink-0 relative min-h-[250px] lg:min-h-[500px]">
             <img
-              src="https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1200"
+              src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?w=1200&q=80"
               alt="Times Square New York"
               className="absolute inset-0 w-full h-full object-cover"
               loading="lazy"
