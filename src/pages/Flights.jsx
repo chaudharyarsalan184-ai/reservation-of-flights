@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect, useRef } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, Link, useNavigate } from 'react-router-dom';
 import MetaTags from '../components/MetaTags';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -38,6 +38,7 @@ const AIRLINE_OPTIONS = ['All', 'Delta Air Lines', 'United Airlines', 'American 
 
 function Flights() {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
   const [priceRange, setPriceRange] = useState([0, 2000]);
   const [selectedAirlines, setSelectedAirlines] = useState(['All']);
   const [stops, setStops] = useState('all');
@@ -379,6 +380,23 @@ function Flights() {
                         isRoundTrip={flight.isRoundTrip}
                         outbound={flight.outbound}
                         returnFlight={flight.returnFlight}
+                        onBook={() => navigate('/booking', {
+                          state: {
+                            flight: {
+                              ...flight,
+                              outbound: flight.outbound,
+                              returnFlight: flight.returnFlight,
+                            },
+                            searchParams: {
+                              from,
+                              to,
+                              departureDate,
+                              returnDate,
+                              passengers,
+                              tripType,
+                            },
+                          },
+                        })}
                       />
                     ))
                   ) : (

@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Flights from './pages/Flights';
+import Booking from './pages/Booking';
 import Blog from './pages/Blog';
 import Destination from './pages/Destination';
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/destination/:city" element={<Destination />} />
           <Route path="/flights" element={<Flights />} />
+          <Route path="/booking" element={<Booking />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
           {/* Catch-all: redirect 404 to homepage */}
