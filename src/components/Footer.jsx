@@ -107,8 +107,21 @@ function Footer() {
           </div>
         </div>
 
+        {/* Disclaimer */}
+        <div className="mt-8 pt-8 border-t border-gray-700 flex flex-col items-center text-center">
+          <p className="text-xs text-gray-400 leading-relaxed max-w-4xl">
+            <strong className="text-gray-500">Disclaimer:</strong> Reservation of Flights, operated by Quick Travel Inc., is an independent travel agency and is not affiliated with, managed, or operated by any airline. All flight bookings made through our platform are subject to the individual terms, conditions, and fare rules of the respective airlines. Our service fees apply solely to the booking facilitation and customer support we provide, and are separate from any charges or fees imposed directly by the airlines.
+          </p>
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-gray-800 text-xs font-medium text-white border border-gray-600 mt-4">
+            <svg className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20" aria-hidden>
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            ARC Certified
+          </span>
+        </div>
+
         {/* Social Icons */}
-        <div className="mt-8 pt-8 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-6 pt-6 border-t border-gray-700 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex space-x-6">
             {socialLinks.map(({ href, icon, label }) => (
               <a
