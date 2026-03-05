@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import MetaTags from '../components/MetaTags';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
@@ -10,6 +10,10 @@ import { FALLBACK_IMAGE } from '../utils/images';
 import { apiService } from '../services/api';
 import { getAirlineName, formatDuration } from '../utils/airlines';
 import { AIRPORTS } from '../data/airports';
+import { buildBookingState } from '../utils/bookingState';
+
+const FLIGHT_CACHE_TTL_MS = 2 * 60 * 1000; // 2 min cache for instant reload
+const destinationFlightCache = new Map();
 
 function getCityFromCode(code) {
   return AIRPORTS.find((a) => a.code === code)?.city || code;
@@ -17,6 +21,7 @@ function getCityFromCode(code) {
 
 function Destination() {
   const { city: slug } = useParams();
+  const navigate = useNavigate();
   const destination = getDestinationBySlug(slug);
 
   const [flights, setFlights] = useState([]);
@@ -26,12 +31,18 @@ function Destination() {
   const from = 'JFK';
   const to = destination?.iataCode || '';
   const departureDate = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
-  const returnDate = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
   const passengers = '1';
-  const tripType = 'round-trip';
 
   useEffect(() => {
     if (!destination?.iataCode) return;
+
+    const cacheKey = `one-way_${from}_${to}_${departureDate}`;
+    const cached = destinationFlightCache.get(cacheKey);
+    if (cached && Date.now() - cached.at < FLIGHT_CACHE_TTL_MS) {
+      setFlights(cached.flights);
+      setError(null);
+      return;
+    }
 
     let cancelled = false;
     setIsLoading(true);
@@ -43,9 +54,7 @@ function Destination() {
           originLocationCode: from,
           destinationLocationCode: to,
           departureDate,
-          returnDate,
           adults: passengers,
-          tripType: 'round-trip',
         });
         if (cancelled) return;
 
@@ -56,8 +65,6 @@ function Destination() {
 
         offerList.forEach((offer, idx) => {
           const outboundItinerary = offer.itineraries?.[0];
-          const returnItinerary = offer.itineraries?.[1];
-
           if (!outboundItinerary?.segments?.length) return;
 
           const outFirstSeg = outboundItinerary.segments[0];
@@ -76,36 +83,19 @@ function Destination() {
             stops: outboundItinerary.segments.length - 1 === 0 ? 'Non-Stop' : `${outboundItinerary.segments.length - 1} Stop(s)`,
           };
 
-          let returnFlight = null;
-          if (returnItinerary?.segments?.length > 0) {
-            const retFirstSeg = returnItinerary.segments[0];
-            const retLastSeg = returnItinerary.segments[returnItinerary.segments.length - 1];
-            const retStops = returnItinerary.segments.length - 1;
-            returnFlight = {
-              departureTime: new Date(retFirstSeg.departure.at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-              departureCode: retFirstSeg.departure.iataCode,
-              departureCity: toCity,
-              arrivalTime: new Date(retLastSeg.arrival.at).toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
-              arrivalCode: retLastSeg.arrival.iataCode,
-              arrivalCity: fromCity,
-              duration: formatDuration(returnItinerary.duration || 'PT0H0M'),
-              stops: retStops === 0 ? 'Non-Stop' : `${retStops} Stop(s)`,
-              airlineCode: retFirstSeg.carrierCode,
-            };
-          }
-
           transformed.push({
             id: offer.id || `f-${idx}`,
             airline,
             airlineCode,
             logo: `https://www.gstatic.com/flights/airline_logos/70px/${airlineCode}.png`,
             price: offer.price?.total?.toString() || '0',
-            isRoundTrip: !!returnFlight,
+            isRoundTrip: false,
             outbound,
-            returnFlight,
+            returnFlight: null,
           });
         });
 
+        destinationFlightCache.set(cacheKey, { flights: transformed, at: Date.now() });
         setFlights(transformed);
       } catch (err) {
         if (!cancelled) {
@@ -188,7 +178,7 @@ function Destination() {
               Flight Deals to {city}
             </h2>
             <p className="text-gray-600 text-sm mb-6">
-              Round-trip from {getCityFromCode(from)} — Sample dates. Prices may vary.
+              One-way from {getCityFromCode(from)} — Sample dates. Prices may vary.
             </p>
 
             {isLoading && (
@@ -217,6 +207,17 @@ function Destination() {
                     isRoundTrip={flight.isRoundTrip}
                     outbound={flight.outbound}
                     returnFlight={flight.returnFlight}
+                    onBook={() => navigate('/booking', {
+                      state: buildBookingState(
+                        flight,
+                        from,
+                        to,
+                        departureDate,
+                        '',
+                        passengers,
+                        'one-way',
+                      ),
+                    })}
                   />
                 ))}
               </div>
@@ -226,7 +227,7 @@ function Destination() {
               <div className="py-12 text-center text-gray-600">
                 <p>No flights found for the selected dates.</p>
                 <Link
-                  to={`/flights?from=${from}&to=${to}&departureDate=${departureDate}&returnDate=${returnDate}&passengers=1&tripType=round-trip`}
+                  to={`/flights?from=${from}&to=${to}&departureDate=${departureDate}&passengers=1&tripType=one-way`}
                   className="mt-4 inline-block px-6 py-2 bg-[#FF6B35] text-white rounded-lg hover:bg-[#e55a28]"
                 >
                   Search with different dates

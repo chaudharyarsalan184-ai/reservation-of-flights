@@ -7,7 +7,7 @@ const DOMESTIC_DEALS = [
   { from: 'Los Angeles', fromCode: 'LAX', to: 'Las Vegas', toCode: 'LAS', price: '136.89', date: '18 Mar 26', image: 'https://images.unsplash.com/photo-1605833556294-ea5c7a74f57d?w=200&q=80', alt: 'Las Vegas' },
   { from: 'New York', fromCode: 'JFK', to: 'Atlanta', toCode: 'ATL', price: '313.90', date: '22 Mar 26', image: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=200&q=80', alt: 'Atlanta' },
   { from: 'Washington DC', fromCode: 'IAD', to: 'Miami', toCode: 'MIA', price: '189.50', date: '25 Mar 26', image: 'https://images.unsplash.com/photo-1505118380757-91f5f5632de0?w=200&q=80', alt: 'Miami' },
-  { from: 'New York', fromCode: 'JFK', to: 'Orlando', toCode: 'MCO', price: '245.00', date: '20 Mar 26', image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=200&q=80', alt: 'Orlando', featured: true },
+  { from: 'New York', fromCode: 'JFK', to: 'Orlando', toCode: 'MCO', price: '245.00', date: '20 Mar 26', image: 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=200&q=80', alt: 'Orlando' },
   { from: 'Chicago', fromCode: 'ORD', to: 'Atlanta', toCode: 'ATL', price: '156.00', date: '28 Mar 26', image: 'https://images.unsplash.com/photo-1582552938357-32b906df40cb?w=200&q=80', alt: 'Atlanta' },
 ];
 
@@ -16,17 +16,13 @@ const INTERNATIONAL_DEALS = [
   { from: 'New York', fromCode: 'JFK', to: 'London', toCode: 'LHR', price: '489.00', date: '15 Apr 26', image: 'https://images.pexels.com/photos/460672/pexels-photo-460672.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'London' },
   { from: 'Los Angeles', fromCode: 'LAX', to: 'Tokyo', toCode: 'NRT', price: '785.50', date: '18 Apr 26', image: 'https://images.pexels.com/photos/2506923/pexels-photo-2506923.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Tokyo' },
   { from: 'Miami', fromCode: 'MIA', to: 'Mexico City', toCode: 'MEX', price: '312.00', date: '22 Apr 26', image: 'https://images.pexels.com/photos/1174732/pexels-photo-1174732.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Mexico City' },
-  { from: 'Chicago', fromCode: 'ORD', to: 'Paris', toCode: 'CDG', price: '598.00', date: '10 Apr 26', image: 'https://images.pexels.com/photos/941415/pexels-photo-941415.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Paris', featured: true },
+  { from: 'Chicago', fromCode: 'ORD', to: 'Paris', toCode: 'CDG', price: '598.00', date: '10 Apr 26', image: 'https://images.pexels.com/photos/941415/pexels-photo-941415.jpeg?auto=compress&cs=tinysrgb&w=200', alt: 'Paris' },
   { from: 'San Francisco', fromCode: 'SFO', to: 'Sydney', toCode: 'SYD', price: '892.00', date: '25 Apr 26', image: 'https://images.unsplash.com/photo-1523482580671-f216146beb83?w=200&q=80', alt: 'Sydney' },
 ];
 
-function DealRow({ from, fromCode, to, toCode, price, date, image, alt, featured, onBook }) {
+function DealRow({ from, fromCode, to, toCode, price, date, image, alt, onBook }) {
   return (
-    <div
-      className={`flex flex-wrap sm:flex-nowrap items-center gap-4 py-4 px-4 rounded-lg transition-colors border-b border-gray-100 last:border-b-0 ${
-        featured ? 'bg-blue-50/70' : 'hover:bg-gray-50'
-      }`}
-    >
+    <div className="flex flex-wrap sm:flex-nowrap items-center gap-4 py-4 px-4 rounded-lg transition-colors border-b border-gray-100 last:border-b-0 hover:bg-gray-50">
       <img
         src={image}
         alt={alt}
@@ -44,11 +40,7 @@ function DealRow({ from, fromCode, to, toCode, price, date, image, alt, featured
       <button
         type="button"
         onClick={() => onBook(fromCode, toCode)}
-        className={`inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-medium text-sm transition-colors flex-shrink-0 ${
-          featured
-            ? 'bg-[#FF6B35] text-white hover:bg-[#e55a28] shadow-sm'
-            : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
-        }`}
+        className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg font-medium text-sm transition-colors flex-shrink-0 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
       >
         Book Now
       </button>

@@ -14,6 +14,7 @@ const HERO_IMAGE = 'https://images.unsplash.com/photo-1518391846015-55a9cc003b25
 function HeroSection({ contentOnly = false }) {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    tripType: 'round-trip',
     from: '',
     to: '',
     departureDate: '',
@@ -22,16 +23,17 @@ function HeroSection({ contentOnly = false }) {
     class: 'Economy',
   });
 
+  const isOneWay = formData.tripType === 'one-way';
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    const tripType = formData.returnDate ? 'round-trip' : 'one-way';
     const params = new URLSearchParams({
       from: formData.from,
       to: formData.to,
       departureDate: formData.departureDate,
-      returnDate: formData.returnDate || '',
+      returnDate: isOneWay ? '' : (formData.returnDate || ''),
       passengers: formData.passengers,
-      tripType,
+      tripType: formData.tripType,
     });
     navigate(`/flights?${params.toString()}`);
   };
@@ -53,6 +55,28 @@ function HeroSection({ contentOnly = false }) {
           <p className="text-sm sm:text-base text-white/90 drop-shadow">
             Discover the world with best flight deals
           </p>
+        </div>
+
+        {/* One way / Round trip toggle - outside form, centered */}
+        <div className="flex justify-center gap-2 mb-3">
+          <button
+            type="button"
+            onClick={() => setFormData((p) => ({ ...p, tripType: 'one-way', returnDate: '' }))}
+            className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+              isOneWay ? 'bg-[#FF6B35] text-white' : 'bg-white/80 text-gray-600 hover:bg-white'
+            }`}
+          >
+            One way
+          </button>
+          <button
+            type="button"
+            onClick={() => setFormData((p) => ({ ...p, tripType: 'round-trip' }))}
+            className={`px-3 py-1.5 text-sm font-medium rounded transition-colors ${
+              !isOneWay ? 'bg-[#FF6B35] text-white' : 'bg-white/80 text-gray-600 hover:bg-white'
+            }`}
+          >
+            Round trip
+          </button>
         </div>
 
         {/* Flight booking form - fully responsive grid */}
@@ -85,9 +109,17 @@ function HeroSection({ contentOnly = false }) {
               <label htmlFor="departureDate" className="text-xs px-2 pt-1.5 text-gray-500">Departure</label>
               <input type="date" id="departureDate" name="departureDate" value={formData.departureDate} onChange={handleChange} className={inputClass} />
             </div>
-            <div className={boxClass}>
+            <div className={`${boxClass} ${isOneWay ? 'opacity-50 pointer-events-none select-none' : ''}`}>
               <label htmlFor="returnDate" className="text-xs px-2 pt-1.5 text-gray-500">Return</label>
-              <input type="date" id="returnDate" name="returnDate" value={formData.returnDate} onChange={handleChange} className={inputClass} />
+              <input
+                type="date"
+                id="returnDate"
+                name="returnDate"
+                value={formData.returnDate}
+                onChange={handleChange}
+                disabled={isOneWay}
+                className={inputClass}
+              />
             </div>
             <div className={boxClass}>
               <label htmlFor="passengers" className="text-xs px-2 pt-1.5 text-gray-500">Passengers</label>
